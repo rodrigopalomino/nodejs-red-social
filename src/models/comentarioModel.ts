@@ -1,9 +1,14 @@
-import { DATE, DataTypes } from "sequelize";
+import { DATE, DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
 import { Publicacion } from "./publicacionModel";
 import { Usuario } from "./usuarioModel";
+import { Comentario as ComentarioInterfaces } from "../interfaces/comentarioInterfaces";
 
-export const Comentario = sequelize.define(
+export interface ComentarioModel
+  extends Model<ComentarioInterfaces>,
+    ComentarioInterfaces {}
+
+export const Comentario = sequelize.define<ComentarioModel>(
   "comentarios",
   {
     comentario_id: {

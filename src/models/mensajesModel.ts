@@ -1,8 +1,13 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
 import { Usuario } from "./usuarioModel";
+import { Mensaje as MensajeInterfaces } from "../interfaces/mensajeInterfaces";
 
-export const Mensaje = sequelize.define(
+export interface MensajeModel
+  extends Model<MensajeInterfaces>,
+    MensajeInterfaces {}
+
+export const Mensaje = sequelize.define<MensajeModel>(
   "mensajes",
   {
     mensaje_id: {

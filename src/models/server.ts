@@ -4,6 +4,8 @@ import { Publicacion } from "./publicacionModel";
 import { Like } from "./likeModel";
 import { Comentario } from "./comentarioModel";
 import { Mensaje } from "./mensajesModel";
+import { router } from "../routes";
+import cors from "cors";
 
 class Server {
   private app: express.Application;
@@ -13,6 +15,8 @@ class Server {
     this.app = express();
     this.PORT = process.env.PORT || "3001";
     this.listen();
+    this.middlewares();
+    this.routes();
     this.dbConnect();
   }
 
@@ -20,6 +24,15 @@ class Server {
     this.app.listen(this.PORT, () => {
       console.log(`Ejecutandose en el puerto ${this.PORT}`);
     });
+  }
+
+  middlewares() {
+    this.app.use(express.json());
+    this.app.use(cors());
+  }
+
+  routes() {
+    this.app.use(router);
   }
 
   async dbConnect() {

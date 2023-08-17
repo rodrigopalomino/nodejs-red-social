@@ -1,8 +1,13 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
 import { Usuario } from "./usuarioModel";
+import { Publicacion as PublicacionInterfaces } from "../interfaces/publicacionInterfaces";
 
-export const Publicacion = sequelize.define(
+export interface PublicacionModel
+  extends Model<PublicacionInterfaces>,
+    PublicacionInterfaces {}
+
+export const Publicacion = sequelize.define<PublicacionModel>(
   "publicaciones",
   {
     post_id: {

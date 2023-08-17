@@ -1,9 +1,12 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
 import { Publicacion } from "./publicacionModel";
 import { Usuario } from "./usuarioModel";
+import { Like as LikeInterfaces } from "../interfaces/likeInterfaces";
 
-export const Like = sequelize.define(
+export interface LikeModel extends Model<LikeInterfaces>, LikeInterfaces {}
+
+export const Like = sequelize.define<LikeModel>(
   "likes",
   {
     like_id: {

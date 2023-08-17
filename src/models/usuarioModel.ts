@@ -1,7 +1,12 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
+import { Usuario as UsuarioInterfaces } from "../interfaces/usuarioInterfaces";
 
-export const Usuario = sequelize.define(
+export interface UsuarioModel
+  extends Model<UsuarioInterfaces>,
+    UsuarioInterfaces {}
+
+export const Usuario = sequelize.define<UsuarioModel>(
   "usuarios",
   {
     user_id: {
@@ -10,11 +15,6 @@ export const Usuario = sequelize.define(
       autoIncrement: true,
     },
     username: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-    },
-    email: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
