@@ -9,7 +9,7 @@ export const getItems = async () => {
     include: [{ model: Usuario, attributes: [] }],
     attributes: {
       exclude: ["user_id"],
-      include: [[sequelize.col("Usuario.username"), "username"]],
+      include: [[sequelize.col("usuarios.username"), "username"]],
     },
   });
 
