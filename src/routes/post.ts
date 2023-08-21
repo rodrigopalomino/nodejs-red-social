@@ -1,6 +1,5 @@
 import { Router } from "express";
 import {
-  createLike,
   createPublicacion,
   getPublicacion,
   getPublicaciones,

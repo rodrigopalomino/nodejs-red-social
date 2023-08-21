@@ -6,7 +6,6 @@ import {
 } from "../services/publicacionesServices";
 import { Publicacion } from "../interfaces/publicacionInterfaces";
 import { handleHttp } from "../utils/error.handle";
-import { Like } from "../interfaces/likeInterfaces";
 
 export const getPublicaciones = async (req: Request, res: Response) => {
   try {
