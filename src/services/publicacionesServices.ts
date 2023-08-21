@@ -2,14 +2,12 @@ import sequelize from "../db/connection";
 import { Publicacion as PublicacionInterfaces } from "../interfaces/publicacionInterfaces";
 import { Publicacion } from "../models/publicacionModel";
 import { Usuario } from "../models/usuarioModel";
-import { Like } from "../models/likeModel";
 
 export const getItems = async () => {
   const items = await Publicacion.findAll({
-    include: [{ model: Usuario, attributes: [] }],
+    include: [{ model: Usuario, attributes: ["username"] }],
     attributes: {
       exclude: ["user_id"],
-      include: [[sequelize.col("Usuario.username"), "username"]],
     },
   });
 
