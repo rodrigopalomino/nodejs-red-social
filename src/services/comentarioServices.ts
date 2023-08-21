@@ -35,10 +35,9 @@ export const createComent = async (comentario: ComentarioInterfaces) => {
 export const getComent = async (post_id: string) => {
   const comentarios = await Comentario.findAll({
     where: { post_id: post_id },
-    include: [{ model: Usuario, attributes: [] }],
+    include: [{ model: Usuario, attributes: ["username"] }],
     attributes: {
       exclude: ["user_id"],
-      include: [[sequelize.col("Usuario.username"), "username"]],
     },
   });
   return { comentarios, status: 200 };
