@@ -1,8 +1,23 @@
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize("red_social", "root", "", {
-  host: "localhost",
-  dialect: "mysql",
-});
+const sequelize = new Sequelize(
+  process.env.DB_DATABASE || "red_social",
+  process.env.DB_USER || "root",
+  process.env.DB_PASSWORD || "",
+  {
+    host: process.env.DB_HOST || "localhost",
+    port: Number(process.env.DB_PORT),
+    dialect: "mysql",
+  }
+);
 
 export default sequelize;
+
+// import { Sequelize } from "sequelize";
+
+// const sequelize = new Sequelize("red_social", "root", "", {
+//   host: "localhost",
+//   dialect: "mysql",
+// });
+
+// export default sequelize;
