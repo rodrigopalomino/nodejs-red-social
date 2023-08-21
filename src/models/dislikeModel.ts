@@ -1,17 +1,15 @@
-import { DATE, DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
 import { Publicacion } from "./publicacionModel";
 import { Usuario } from "./usuarioModel";
-import { Comentario as ComentarioInterfaces } from "../interfaces/comentarioInterfaces";
+import { Like as LikeInterfaces } from "../interfaces/likeInterfaces";
 
-export interface ComentarioModel
-  extends Model<ComentarioInterfaces>,
-    ComentarioInterfaces {}
+export interface DislikeModel extends Model<LikeInterfaces>, LikeInterfaces {}
 
-export const Comentario = sequelize.define<ComentarioModel>(
-  "comentarios",
+export const Dislike = sequelize.define<DislikeModel>(
+  "dislikes",
   {
-    comentario_id: {
+    like_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -24,20 +22,16 @@ export const Comentario = sequelize.define<ComentarioModel>(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    contenido: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
   },
   {
     freezeTableName: true,
   }
 );
 
-Comentario.belongsTo(Publicacion, {
+Dislike.belongsTo(Publicacion, {
   foreignKey: "post_id",
 });
 
-Comentario.belongsTo(Usuario, {
+Dislike.belongsTo(Usuario, {
   foreignKey: "user_id",
 });

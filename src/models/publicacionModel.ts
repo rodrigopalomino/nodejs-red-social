@@ -19,14 +19,13 @@ export const Publicacion = sequelize.define<PublicacionModel>(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    contenido: {
+    titulo: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    f_publicacion: {
-      type: DataTypes.DATE,
+    contenido: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: DataTypes.NOW,
     },
     cantidad_likes: {
       type: DataTypes.INTEGER,

@@ -6,6 +6,7 @@ import { Comentario } from "./comentarioModel";
 import { Mensaje } from "./mensajesModel";
 import { router } from "../routes";
 import cors from "cors";
+import { Dislike } from "./dislikeModel";
 
 class Server {
   private app: express.Application;
@@ -42,6 +43,7 @@ class Server {
       await Like.sync();
       await Comentario.sync();
       await Mensaje.sync();
+      await Dislike.sync();
     } catch (error) {
       console.log(error);
     }
