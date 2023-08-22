@@ -9,6 +9,7 @@ export const getItems = async () => {
     attributes: {
       exclude: ["user_id"],
     },
+    order: [["post_id", "DESC"]],
   });
 
   return { items, status: 200 };
