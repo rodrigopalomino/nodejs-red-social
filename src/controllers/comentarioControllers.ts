@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Comentario } from "../interfaces/comentarioInterfaces";
+import { Comentario } from "../interfaces/comentario";
 import { createComent, getComent } from "../services/comentarioServices";
 import { handleHttp } from "../utils/error.handle";
 
@@ -25,7 +25,7 @@ export const getComentario = async (req: Request, res: Response) => {
 
   try {
     const response = await getComent(id);
-    res.status(response.status).json(response);
+    res.status(response.status).json(response.items);
   } catch (error) {
     handleHttp(res, "error_createPublicacion", 400, error);
   }

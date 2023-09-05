@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
-import { Usuario as UsuarioInterfaces } from "../interfaces/usuarioInterfaces";
+import { Usuario as UsuarioInterfaces } from "../interfaces/usuario";
 
 export interface UsuarioModel
   extends Model<UsuarioInterfaces>,

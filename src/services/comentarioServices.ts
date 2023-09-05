@@ -1,7 +1,13 @@
 import sequelize from "../db/connection";
-import { Comentario as ComentarioInterfaces } from "../interfaces/comentarioInterfaces";
+import { Comentario as ComentarioInterfaces } from "../interfaces/comentario";
 import { Comentario } from "../models/comentarioModel";
 import { Usuario } from "../models/usuarioModel";
+
+const validation = (lista: (string | number)[], indice: number) => {
+  return lista[indice] == "" || lista[indice] == undefined
+    ? "campo requerido"
+    : "";
+};
 
 export const createComent = async (comentario: ComentarioInterfaces) => {
   const propiedadesComentario = [
@@ -11,19 +17,9 @@ export const createComent = async (comentario: ComentarioInterfaces) => {
   ];
   if (!propiedadesComentario.every(Boolean)) {
     return {
-      post_id:
-        propiedadesComentario[0] == "" || propiedadesComentario == undefined
-          ? "campo requerido"
-          : "",
-
-      user_id:
-        propiedadesComentario[0] == "" || propiedadesComentario == undefined
-          ? "campo requerido"
-          : "",
-      contenido:
-        propiedadesComentario[0] == "" || propiedadesComentario == undefined
-          ? "campo requerido"
-          : "",
+      post_id: validation(propiedadesComentario, 0),
+      user_id: validation(propiedadesComentario, 1),
+      contenido: validation(propiedadesComentario, 2),
       status: 400,
     };
   }
@@ -33,12 +29,12 @@ export const createComent = async (comentario: ComentarioInterfaces) => {
 };
 
 export const getComent = async (post_id: string) => {
-  const comentarios = await Comentario.findAll({
+  const items = await Comentario.findAll({
     where: { post_id: post_id },
     include: [{ model: Usuario, attributes: ["username"] }],
     attributes: {
       exclude: ["user_id"],
     },
   });
-  return { comentarios, status: 200 };
+  return { items, status: 200 };
 };

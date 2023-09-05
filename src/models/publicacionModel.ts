@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
 import { Usuario } from "./usuarioModel";
-import { Publicacion as PublicacionInterfaces } from "../interfaces/publicacionInterfaces";
+import { Publicacion as PublicacionInterfaces } from "../interfaces/publicacion";
 
 export interface PublicacionModel
   extends Model<PublicacionInterfaces>,

@@ -1,11 +1,12 @@
-import { Like as Likeinterfaces } from "../interfaces/likeInterfaces";
+import { Like as Likeinterfaces } from "../interfaces/like";
 import { Dislike } from "../models/dislikeModel";
 import { Like } from "../models/likeModel";
 import { Publicacion } from "../models/publicacionModel";
 
-export const getItems = async () => {
-  const items = await Like.findAll();
-  return { items, status: 200 };
+const validation = (lista: (string | number)[], indice: number) => {
+  return lista[indice] == "" || lista[indice] == undefined
+    ? "campo requerido"
+    : "";
 };
 
 export const getItem = async (user_id: string) => {
@@ -23,14 +24,8 @@ export const clike = async (like: Likeinterfaces) => {
 
   if (!PropiedadesLike.every(Boolean)) {
     return {
-      user_id:
-        PropiedadesLike[0] == 0 || PropiedadesLike[0] == undefined
-          ? "campo requerido"
-          : "",
-      contenido:
-        PropiedadesLike[1] == 0 || PropiedadesLike[1] == undefined
-          ? "campo requerido"
-          : "",
+      user_id: validation(PropiedadesLike, 0),
+      post_id: validation(PropiedadesLike, 1),
       status: 400,
     };
   }
@@ -39,8 +34,6 @@ export const clike = async (like: Likeinterfaces) => {
     where: { user_id: like.user_id, post_id: like.post_id },
   });
 
-  let aca = "no se borro nada";
-
   if (dislike) {
     await Dislike.destroy({
       where: { user_id: like.user_id, post_id: like.post_id },
@@ -48,7 +41,6 @@ export const clike = async (like: Likeinterfaces) => {
     await Publicacion.decrement("cantidad_dislikes", {
       where: { post_id: dislike.post_id },
     });
-    aca = "se borro un dislike";
   }
 
   const prueba = await Like.findOne({
@@ -60,7 +52,7 @@ export const clike = async (like: Likeinterfaces) => {
     await Publicacion.increment("cantidad_likes", {
       where: { post_id: like.post_id },
     });
-    return { msg: "like creado => ", aca, prueba, status: 200 };
+    return { msg: "like creado", status: 200 };
   }
 
   await Like.destroy({
@@ -69,22 +61,16 @@ export const clike = async (like: Likeinterfaces) => {
   await Publicacion.decrement("cantidad_likes", {
     where: { post_id: like.post_id },
   });
-  return { msg: "like borrada => ", aca, status: 200 };
+  return { msg: "like borrada", status: 200 };
 };
 
 export const cdislike = async (dislike: Likeinterfaces) => {
-  const PropiedadesLike = [dislike.user_id, dislike.post_id];
+  const PropiedadesDislike = [dislike.user_id, dislike.post_id];
 
-  if (!PropiedadesLike.every(Boolean)) {
+  if (!PropiedadesDislike.every(Boolean)) {
     return {
-      user_id:
-        PropiedadesLike[0] == 0 || PropiedadesLike[0] == undefined
-          ? "campo requerido"
-          : "",
-      contenido:
-        PropiedadesLike[1] == 0 || PropiedadesLike[1] == undefined
-          ? "campo requerido"
-          : "",
+      user_id: validation(PropiedadesDislike, 0),
+      post_id: validation(PropiedadesDislike, 1),
       status: 400,
     };
   }
@@ -93,8 +79,6 @@ export const cdislike = async (dislike: Likeinterfaces) => {
     where: { user_id: dislike.user_id, post_id: dislike.post_id },
   });
 
-  let aca = "no se borro nada";
-
   if (like) {
     await Like.destroy({
       where: { user_id: dislike.user_id, post_id: dislike.post_id },
@@ -102,7 +86,6 @@ export const cdislike = async (dislike: Likeinterfaces) => {
     await Publicacion.decrement("cantidad_likes", {
       where: { post_id: like.post_id },
     });
-    aca = "aca se borro un like";
   }
 
   const prueba = await Dislike.findOne({
@@ -114,7 +97,7 @@ export const cdislike = async (dislike: Likeinterfaces) => {
     await Publicacion.increment("cantidad_dislikes", {
       where: { post_id: dislike.post_id },
     });
-    return { msg: "dislike creado => ", aca, prueba, status: 200 };
+    return { msg: "dislike creado", status: 200 };
   }
 
   await Dislike.destroy({
@@ -123,5 +106,5 @@ export const cdislike = async (dislike: Likeinterfaces) => {
   await Publicacion.decrement("cantidad_dislikes", {
     where: { post_id: dislike.post_id },
   });
-  return { msg: "dislike borrada => ", aca, status: 200 };
+  return { msg: "dislike borrada", status: 200 };
 };

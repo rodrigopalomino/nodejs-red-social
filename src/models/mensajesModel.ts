@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
 import { Usuario } from "./usuarioModel";
-import { Mensaje as MensajeInterfaces } from "../interfaces/mensajeInterfaces";
+import { Mensaje as MensajeInterfaces } from "../interfaces/mensaje";
 
 export interface MensajeModel
   extends Model<MensajeInterfaces>,
@@ -26,11 +26,6 @@ export const Mensaje = sequelize.define<MensajeModel>(
     contenido: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    f_mensaje: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
     },
   },
   {

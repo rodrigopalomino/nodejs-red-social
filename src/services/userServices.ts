@@ -1,7 +1,13 @@
 import bcrypt from "bcrypt";
 import { Usuario, UsuarioModel } from "../models/usuarioModel";
-import { Usuario as UsuarioInterfaces } from "../interfaces/usuarioInterfaces";
+import { Usuario as UsuarioInterfaces } from "../interfaces/usuario";
 import jwt from "jsonwebtoken";
+
+const validation = (lista: (string | Date)[], indice: number) => {
+  return lista[indice] == "" || lista[indice] == undefined
+    ? "campo requerido"
+    : "";
+};
 
 export const nuevoUsuario = async (usuario: UsuarioInterfaces) => {
   const propiedadesUsuario = [
@@ -11,30 +17,15 @@ export const nuevoUsuario = async (usuario: UsuarioInterfaces) => {
     usuario.lastname,
     usuario.f_nacimiento,
   ];
-
+  // const Asd = sequelize.q
   //verificar que todos los sean diferentes
   if (!propiedadesUsuario.every(Boolean)) {
     return {
-      username:
-        propiedadesUsuario[0] == "" || propiedadesUsuario[0] == undefined
-          ? "campo requerido"
-          : "",
-      password:
-        propiedadesUsuario[1] == "" || propiedadesUsuario[1] == undefined
-          ? "campo requerido"
-          : "",
-      name:
-        propiedadesUsuario[2] == "" || propiedadesUsuario[2] == undefined
-          ? "campo requerido"
-          : "",
-      lastname:
-        propiedadesUsuario[3] == "" || propiedadesUsuario[3] == undefined
-          ? "campo requerido"
-          : "",
-      f_nacimiento:
-        propiedadesUsuario[4] == "" || propiedadesUsuario[4] == undefined
-          ? "campo requerido"
-          : "",
+      username: validation(propiedadesUsuario, 0),
+      password: validation(propiedadesUsuario, 1),
+      name: validation(propiedadesUsuario, 2),
+      lastname: validation(propiedadesUsuario, 3),
+      f_nacimiento: validation(propiedadesUsuario, 4),
       status: 400,
     };
   }

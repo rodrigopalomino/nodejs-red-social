@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { loginUsuario, nuevoUsuario } from "../services/userServices";
-import { Usuario } from "../interfaces/usuarioInterfaces";
+import { Usuario } from "../interfaces/usuario";
 import { handleHttp } from "../utils/error.handle";
 
 export const login = async (req: Request, res: Response) => {
@@ -27,7 +27,8 @@ export const signIn = async (req: Request, res: Response) => {
 
   try {
     const response = await nuevoUsuario(usuario);
-    res.status(response.status).json(response);
+    res.status(response.status);
+    res.json(response);
   } catch (error) {
     handleHttp(res, "error_signIn_user", 400, error);
   }

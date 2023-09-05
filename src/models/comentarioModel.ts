@@ -1,8 +1,8 @@
-import { DATE, DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
 import { Publicacion } from "./publicacionModel";
 import { Usuario } from "./usuarioModel";
-import { Comentario as ComentarioInterfaces } from "../interfaces/comentarioInterfaces";
+import { Comentario as ComentarioInterfaces } from "../interfaces/comentario";
 
 export interface ComentarioModel
   extends Model<ComentarioInterfaces>,

@@ -3,5 +3,4 @@ export interface Mensaje {
   sender: number;
   receiver: number;
   contenido: string;
-  f_mensaje: Date;
 }

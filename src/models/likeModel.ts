@@ -2,7 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/connection";
 import { Publicacion } from "./publicacionModel";
 import { Usuario } from "./usuarioModel";
-import { Like as LikeInterfaces } from "../interfaces/likeInterfaces";
+import { Like as LikeInterfaces } from "../interfaces/like";
 
 export interface LikeModel extends Model<LikeInterfaces>, LikeInterfaces {}
 
